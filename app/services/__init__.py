@@ -1,3 +1,3 @@
 """
-Business logic services for SecureChat application.
+Business logic services for talkroom application.
 """ 
