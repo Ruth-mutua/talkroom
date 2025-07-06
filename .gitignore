@@ -191,3 +191,5 @@ Desktop.ini
 *~
 .fuse_hidden* 
 alembic.ini
+docker/nginx.conf
+scripts/setup_dev.sh
