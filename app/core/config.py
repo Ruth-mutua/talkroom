@@ -4,7 +4,8 @@ Configuration management for SecureChat application.
 import os
 from typing import Any, Dict, List, Optional, Union
 
-from pydantic import AnyHttpUrl, BaseSettings, EmailStr, Field, validator
+from pydantic import AnyHttpUrl, EmailStr, Field, field_validator
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -31,7 +32,8 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
     
-    @validator("BACKEND_CORS_ORIGINS", pre=True)
+    @field_validator("BACKEND_CORS_ORIGINS", mode="before")
+    @classmethod
     def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
         """Parse CORS origins from environment variable."""
         if isinstance(v, str) and not v.startswith("["):
@@ -56,11 +58,12 @@ class Settings(BaseSettings):
     SMTP_PASSWORD: Optional[str] = None
     EMAILS_FROM_EMAIL: Optional[EmailStr] = None
     
-    @validator("EMAILS_FROM_EMAIL", pre=True)
-    def get_emails_from_email(cls, v: Optional[str], values: Dict[str, Any]) -> Optional[str]:
+    @field_validator("EMAILS_FROM_EMAIL", mode="before")
+    @classmethod
+    def get_emails_from_email(cls, v: Optional[str]) -> Optional[str]:
         """Get email from environment or use SMTP_USER."""
         if not v:
-            return values.get("SMTP_USER")
+            return None  # Will be handled by the application logic
         return v
     
     # File upload
@@ -89,11 +92,11 @@ class Settings(BaseSettings):
         """Check if running in testing mode."""
         return self.ENVIRONMENT.lower() in ("testing", "test")
     
-    class Config:
-        """Pydantic configuration."""
-        case_sensitive = True
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    model_config = {
+        "case_sensitive": True,
+        "env_file": ".env",
+        "env_file_encoding": "utf-8"
+    }
 
 
 # Create settings instance
