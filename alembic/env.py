@@ -11,7 +11,7 @@ from alembic import context
 
 # Import your models here so Alembic can see them
 from app.core.database import Base
-from app.models import user, chat, message
+from app.models import user, talkroom, message
 
 # Import configuration
 from app.core.config import settings
