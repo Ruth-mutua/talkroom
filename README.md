@@ -4,16 +4,16 @@ A modern, scalable, and secure talkroom application built with Python, FastAPI, 
 
 ## Features
 
-- 🔐 **JWT Authentication** - Secure user authentication with refresh tokens
-- 💬 **Real-time Messaging** - WebSocket-based live talkroom functionality
-- 🔒 **End-to-end Security** - Password hashing, input validation, and secure headers
-- 📊 **PostgreSQL Database** - Robust data storage with SQLAlchemy ORM
-- 🚀 **FastAPI Framework** - High-performance async API with automatic documentation
-- 🐳 **Docker Support** - Containerized deployment with docker-compose
-- 🧪 **Comprehensive Testing** - Unit tests, integration tests, and test coverage
-- 🔍 **Code Quality** - Linting, formatting, and type checking
-- 📈 **Monitoring Ready** - Health checks and logging
-- 🌐 **CORS Support** - Cross-origin resource sharing configured
+-  **JWT Authentication** - Secure user authentication with refresh tokens
+-  **Real-time Messaging** - WebSocket-based live talkroom functionality
+-  **End-to-end Security** - Password hashing, input validation, and secure headers
+-  **PostgreSQL Database** - Robust data storage with SQLAlchemy ORM
+-  **FastAPI Framework** - High-performance async API with automatic documentation
+-  **Docker Support** - Containerized deployment with docker-compose
+-  **Comprehensive Testing** - Unit tests, integration tests, and test coverage
+-  **Code Quality** - Linting, formatting, and type checking
+-  **Monitoring Ready** - Health checks and logging
+-  **CORS Support** - Cross-origin resource sharing configured
 
 ## Tech Stack
 
