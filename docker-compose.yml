@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: secure-talkroom-app
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/secure_talkroom
+      - REDIS_URL=redis://redis:6379
+      - BACKEND_CORS_ORIGINS=["http://localhost:3000"]
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+    networks:
+      - talkroom-network
+    restart: unless-stopped
+
+  db:
+    image: postgres:16
+    container_name: secure-talkroom-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=secure_talkroom
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - talkroom-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: secure-talkroom-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - talkroom-network
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: secure-talkroom-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+    networks:
+      - talkroom-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  talkroom-network:
+    driver: bridge 
