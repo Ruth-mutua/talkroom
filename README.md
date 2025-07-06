@@ -121,6 +121,14 @@ talkroom/
    ```bash
    docker-compose up -d
    ```
+Start PostgreSQL and Redis with Docker
+   ```
+   docker-compose up -d db redis
+   ```
+Run database migrations
+   ```
+   alembic upgrade head
+   ```
 
 4. **Manual Setup**
    ```bash
