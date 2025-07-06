@@ -1,0 +1,11 @@
+# Include base requirements
+-r base.txt
+
+# Production server
+gunicorn==21.2.0
+
+# Monitoring
+prometheus-fastapi-instrumentator==6.1.0
+
+# Logging
+structlog==23.2.0 
